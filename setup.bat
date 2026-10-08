@@ -4,48 +4,37 @@ echo  HVOS PC Browser ver0.7 Setup
 echo ==========================================
 
 set PKGS=flask pyautogui keyboard pillow google-genai qrcode
+set PIPCMD=
 
-pip --version >nul 2>&1
-if %errorlevel% == 0 (
-    pip install %PKGS%
-    if errorlevel 1 goto INSTALL_ERROR
-    goto SUCCESS
+pip --version >nul 2>&1 && set "PIPCMD=pip"
+if not defined PIPCMD (
+    python -m pip --version >nul 2>&1 && set "PIPCMD=python -m pip"
+)
+if not defined PIPCMD (
+    py -m pip --version >nul 2>&1 && set "PIPCMD=py -m pip"
+)
+if not defined PIPCMD (
+    echo.
+    echo [ERROR] Python ‚Ü‚½‚Í pip ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½B
+    echo 1. PC‚ðÄ‹N“®‚µ‚Ä‚©‚çÄ“xŽÀs‚µ‚Ä‚Ý‚Ä‚­‚¾‚³‚¢B
+    echo 2. Python‚ðÄƒCƒ“ƒXƒg[ƒ‹‚µAuAdd python.exe to PATHv‚Éƒ`ƒFƒbƒN‚ð“ü‚ê‚Ä‚­‚¾‚³‚¢B
+    echo.
+    pause
+    exit /b 1
 )
 
-python -m pip --version >nul 2>&1
-if %errorlevel% == 0 (
-    python -m pip install %PKGS%
-    if errorlevel 1 goto INSTALL_ERROR
-    goto SUCCESS
+%PIPCMD% install %PKGS%
+if errorlevel 1 (
+    echo.
+    echo [ERROR] •”•i‚ÌƒCƒ“ƒXƒg[ƒ‹‚ÉŽ¸”s‚µ‚Ü‚µ‚½B
+    echo ã‚É•\Ž¦‚³‚ê‚½ƒGƒ‰[•¶‚ðAAI ‚ÉŒ©‚¹‚Ä‘Š’k‚µ‚Ä‚Ý‚Ä‚­‚¾‚³‚¢B
+    echo.
+    pause
+    exit /b 1
 )
 
-py -m pip --version >nul 2>&1
-if %errorlevel% == 0 (
-    py -m pip install %PKGS%
-    if errorlevel 1 goto INSTALL_ERROR
-    goto SUCCESS
-)
-
-:ERROR
-echo.
-echo [ERROR] Python ã¾ãŸã¯ pip ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚
-echo 1. PCã‚’å†èµ·å‹•ã—ã¦ã‹ã‚‰å†åº¦å®Ÿè¡Œã—ã¦ã¿ã¦ãã ã•ã„ã€‚
-echo 2. Pythonã‚’å†ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã€ã€ŒAdd python.exe to PATHã€ã«ãƒã‚§ãƒƒã‚¯ã‚’å…¥ã‚Œã¦ãã ã•ã„ã€‚
-echo.
-pause
-exit /b 1
-
-:INSTALL_ERROR
-echo.
-echo [ERROR] éƒ¨å“ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã«å¤±æ•—ã—ã¾ã—ãŸã€‚
-echo ä¸Šã«è¡¨ç¤ºã•ã‚ŒãŸã‚¨ãƒ©ãƒ¼æ–‡ã‚’ã€AI ã«è¦‹ã›ã¦ç›¸è«‡ã—ã¦ã¿ã¦ãã ã•ã„ã€‚
-echo.
-pause
-exit /b 1
-
-:SUCCESS
 echo.
 echo ------------------------------------------
-echo ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ãŒå®Œäº†ã—ã¾ã—ãŸï¼ (å…¨6éƒ¨å“)
+echo ƒZƒbƒgƒAƒbƒv‚ªŠ®—¹‚µ‚Ü‚µ‚½I (‘S6•”•i)
 echo ------------------------------------------
 pause
